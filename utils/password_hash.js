@@ -10,10 +10,17 @@ const hashPassword = async(password) =>{
         }
 }
 
-const verifypassword = (userPassword) =>{
-    bcrypt.compare(userPassword,currentPassword,(err,result)=>{
-        err ? console.log(err) : console.log("password match")
-    })
+const verifypassword = async(userPassword,currentPassword) =>{
+    try{
+     const verifyPassword =  bcrypt.compare(userPassword,currentPassword)
+     if(verifyPassword){
+        return "password correct"
+     }else{
+        return "password Incorrect"
+     }
+    }catch(err){
+        throw Error("Password wrong")
+    }
 }
 
 module.exports ={

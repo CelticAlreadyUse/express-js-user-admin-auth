@@ -1,7 +1,7 @@
 //dservices
 
-const { hashPassword } = require("../../utils/password_hash")
-const { getAllUser, postUser, getUserLogin, getUserEmail } = require("./user.repository")
+const { hashPassword, verifypassword } = require("../../utils/password_hash")
+const { getAllUser, postUser, getUserEmail, getUsersByEmail } = require("./user.repository")
 
 
  const  handlegetAllUsers = async()=>{
@@ -30,10 +30,13 @@ const handleRegisterUser = async(user_name,password,user_email,full_name,date_of
 }
 const handleLoginUser= async(user_email,password) =>{
     try{
-        const userEmail = await getUserLogin(user_email)
-        return userEmail
+        const User = await getUsersByEmail(user_email)
+        const userPassword = User.map(user=>user.password)
+        const match = await verifypassword(password,...userPassword)
+        console.log(match)
+        return User
     }catch(err){
-        return {status:200,message:"Account not Found"}
+        return {status:200,message:`Account not Found ${err}`}
     }
 }   
 

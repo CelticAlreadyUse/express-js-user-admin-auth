@@ -7,6 +7,7 @@ const DateValidation = (date_of_birth)=>{
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/
     return dateRegex.test(date_of_birth)
 }
+
 module.exports = {
     emailValidation,
     DateValidation

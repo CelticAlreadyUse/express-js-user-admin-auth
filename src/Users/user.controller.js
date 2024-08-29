@@ -56,13 +56,14 @@ router.post('/signup',async(req,res)=>{
 })
 
 router.post('/login',async(req,res)=>{
-    const {user_email,user_password} = req.body
+    const userEmail = String(req.body.user_email)
+    const password = String(req.body.password)
     try {
-        const userLogin = await handleLoginUser(user_email)
+        const userLogin = await handleLoginUser(userEmail,password)
         res.json(userLogin)
-        req.session.save()
-    } catch (error) {
-        res.send(err)
+        
+    }catch (error) {
+        res.send(error)
     }  
     
 
